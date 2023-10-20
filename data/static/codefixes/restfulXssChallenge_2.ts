@@ -1,3 +1,7 @@
+import { valid } from "semver"
+
+const validator = require('validator')
+
 ngAfterViewInit () {
     const products = this.productService.search('')
     const quantities = this.quantityService.getAll()
@@ -56,6 +60,7 @@ ngAfterViewInit () {
 
   encodeProductDescription (tableData: any[]) {
     for (let i = 0; i < tableData.length; i++) {
-      tableData[i].description = tableData[i].description.replaceAll('<', '&lt;').replaceAll('>', '&gt;')
+      const sanitizeDescription = validator.escape(tableData[i].description)
+      tableData[i].description = sanitizeDescription
     }
   }
