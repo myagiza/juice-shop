@@ -37,8 +37,9 @@ const entities = new Entities()
 
 const readFile = util.promisify(fs.readFile)
 
-function loadStaticData (file: string) {
-  const filePath = path.resolve('./data/static/' + file + '.yml')
+function loadStaticData(file: string) {
+  const fileName = path.join('./data/static/', file.replace(/^(\.\.(\/|\\|$))+/, ''))
+  const filePath = path.resolve(fileName + '.yml')
   return readFile(filePath, 'utf8')
     .then(safeLoad)
     .catch(() => logger.error('Could not open file: "' + filePath + '"'))
